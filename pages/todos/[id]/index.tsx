@@ -7,7 +7,7 @@ export default function TodoItem() {
     const { id, title, completed } = router.query;
 
     const toggleCompleted = () => {
-        setIsComplete(!isComplete);
+        setIsComplete(!isComplete);//Добавить сохранение статуса
     }
 
     return (
@@ -22,7 +22,7 @@ export default function TodoItem() {
                     Изменить статус
                 </button>
                 <button onClick={() => router.push('/')} >
-                    Back to Home
+                    Вернуться на главную
                 </button>
             </div>
         </div>

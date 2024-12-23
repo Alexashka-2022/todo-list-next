@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Task {
-    _id: string;
-    task: string;
-    isComplete: boolean;
+    id: string;
+    title: string;
+    completed: boolean;
 }
 
 interface TaskState {
@@ -16,32 +16,36 @@ const taskSlice = createSlice({
     name: 'tasks',
     initialState: { list: defaultTasks } as TaskState,
     reducers: {
+        setTasks(state, action: PayloadAction<Task[]>) {
+            state.list = action.payload;
+        },
+
         addTask(state, action: PayloadAction<{ taskValue: string }>) {
             state.list.push({
-                _id: new Date().toISOString(),
-                task: action.payload.taskValue,
-                isComplete: false,
+                id: new Date().toISOString(),// Временно поставим id как дату в формате строки
+                title: action.payload.taskValue,
+                completed: false,
             });
         },
-        changeTask(state, action: PayloadAction<{ _id: string; task: string; isComplete: boolean }>) {
-            state.list = state.list.filter((task) => task._id !== action.payload._id);
+        changeTask(state, action: PayloadAction<{ id: string; title: string; completed: boolean }>) {
+            state.list = state.list.filter((task) => task.id !== action.payload.id);
             state.list.push({
-                _id: action.payload._id,
-                task: action.payload.task,
-                isComplete: action.payload.isComplete,
+                id: action.payload.id,
+                title: action.payload.title,
+                completed: action.payload.completed,
             });
         },
-        deleteTask(state, action: PayloadAction<{ _id: string }>) {
-            state.list = state.list.filter((task) => task._id !== action.payload._id);
+        deleteTask(state, action: PayloadAction<{ id: string }>) {
+            state.list = state.list.filter((task) => task.id !== action.payload.id);
         },
         changeStatus(state, action: PayloadAction<{ _id: string }>) {
-            const foundElement = state.list.find((item) => item._id === action.payload._id);
+            const foundElement = state.list.find((item) => item.id === action.payload._id);
             if (foundElement) {
-                foundElement.isComplete = !foundElement.isComplete;
+                foundElement.completed = !foundElement.completed;
             }
         },
     },
 });
 
-export const { addTask, changeTask, deleteTask, changeStatus } = taskSlice.actions;
+export const { setTasks, addTask, changeTask, deleteTask, changeStatus } = taskSlice.actions;
 export default taskSlice.reducer;
