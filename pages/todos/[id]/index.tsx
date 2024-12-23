@@ -6,6 +6,8 @@ export default function TodoItem() {
     const [isComplete, setIsComplete] = useState<boolean>(false);
     const { id, title, completed } = router.query;
 
+
+    //Обработчик изменения статуса задачи
     const toggleCompleted = () => {
         setIsComplete(!isComplete);//Добавить сохранение статуса
     }

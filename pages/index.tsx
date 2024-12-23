@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setTasks } from "@/store/taskSlice";
+import { RootState, AppDispatch } from '@/store';
 
 type Todo = {
   id: string;
@@ -12,7 +13,8 @@ type Todo = {
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+  const allTasks = useSelector((state: RootState) => state.tasks.list)
 
   useEffect(() => {
     const getData = async () => {
@@ -39,11 +41,24 @@ export default function Home() {
 
   dispatch(setTasks(todos));
 
+  //Обработчик удаления задачи
+  const handleDeleteItem = () => {
+
+  }
+
+  //Обработчик изменения статуса задачи
+  const handleCompleteItem = () => {
+
+  }
+
   return (
     <>
       <h1>Приложение для заметок "To-Do-List"</h1>
+      <button>
+        <Link href={`/add-task`}>Добавить новый элемент</Link>
+      </button>
       {<ul>
-        {todos.map((item) => {
+        {allTasks.map((item) => {
           return (
             <li key={item.id}>
               <p>{item.id}</p>
@@ -56,6 +71,8 @@ export default function Home() {
                 }
               }}>{item.title}</Link>
               <strong>{item.completed ? 'Да' : 'Нет'}</strong>
+              <button type="button" className="element__complete-button" onClick={handleCompleteItem}>Выполнено</button>
+              <button onClick={handleDeleteItem}>Удалить</button>
             </li>
           )
         })}

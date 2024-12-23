@@ -21,8 +21,9 @@ const taskSlice = createSlice({
         },
 
         addTask(state, action: PayloadAction<{ taskValue: string }>) {
+            const nextId = state.list.length + 1; // Определяем следующий ID
             state.list.push({
-                id: new Date().toISOString(),// Временно поставим id как дату в формате строки
+                id: String(nextId),
                 title: action.payload.taskValue,
                 completed: false,
             });

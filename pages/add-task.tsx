@@ -14,8 +14,6 @@ export default function AddItem() {
             router.push('/'); //Переводим на главную страницу
         }
     }
-
-
     return (
         <div>
             <h1>Добавление новой задачи</h1>
