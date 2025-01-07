@@ -21,9 +21,9 @@ const taskSlice = createSlice({
         },
 
         addTask(state, action: PayloadAction<{ taskValue: string }>) {
-            const nextId = state.list.length + 1; // Определяем следующий ID
+            const nextId = String(state.list.length + 1) // Определяем следующий ID
             state.list.push({
-                id: String(nextId),
+                id: nextId,
                 title: action.payload.taskValue,
                 completed: false,
             });
@@ -39,8 +39,8 @@ const taskSlice = createSlice({
         deleteTask(state, action: PayloadAction<{ id: string }>) {
             state.list = state.list.filter((task) => task.id !== action.payload.id);
         },
-        changeStatus(state, action: PayloadAction<{ _id: string }>) {
-            const foundElement = state.list.find((item) => item.id === action.payload._id);
+        changeStatus(state, action: PayloadAction<{ id: string }>) {
+            const foundElement = state.list.find((item) => item.id === action.payload.id);
             if (foundElement) {
                 foundElement.completed = !foundElement.completed;
             }

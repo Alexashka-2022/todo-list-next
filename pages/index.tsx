@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { setTasks } from "@/store/taskSlice";
+import { changeStatus, deleteTask, setTasks } from "@/store/taskSlice";
 import { RootState, AppDispatch } from '@/store';
 
 type Todo = {
@@ -25,6 +25,7 @@ export default function Home() {
         }
         const data: Todo[] = await response.json();
         setTodos(data);
+        dispatch(setTasks(todos));
       } catch (error) {
         console.error(error);
       } finally {
@@ -32,23 +33,28 @@ export default function Home() {
       }
 
     };
-    getData();
-  }, []);
+    if (allTasks.length === 0) {
+      getData();
+    } else {
+      setLoading(false);
+    }
+  }, [allTasks, dispatch]);
+
+
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  dispatch(setTasks(todos));
 
   //Обработчик удаления задачи
-  const handleDeleteItem = () => {
-
+  const handleDeleteItem = (id: string) => {
+    dispatch(deleteTask({ id }))
   }
 
   //Обработчик изменения статуса задачи
-  const handleCompleteItem = () => {
-
+  const handleCompleteItem = (id: string) => {
+    dispatch(changeStatus({ id }));
   }
 
   return (
@@ -65,14 +71,16 @@ export default function Home() {
               <Link href={{
                 pathname: `/todos/${item.id}`,
                 query: {
-                  id: item.id,
-                  title: item.title,
-                  completed: item.completed
+                  id: item.id
                 }
               }}>{item.title}</Link>
               <strong>{item.completed ? 'Да' : 'Нет'}</strong>
-              <button type="button" className="element__complete-button" onClick={handleCompleteItem}>Выполнено</button>
-              <button onClick={handleDeleteItem}>Удалить</button>
+              <button type="button" className="element__complete-button" onClick={() => {
+                handleCompleteItem(item.id)
+              }}>Выполнено</button>
+              <button onClick={() => {
+                handleDeleteItem(item.id)
+              }}>Удалить</button>
             </li>
           )
         })}
