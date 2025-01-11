@@ -1,0 +1,107 @@
+.home {
+    max-width: 1280px;
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0 auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    &__header {
+        margin: 0 auto;
+        padding: 70px 0;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    &__elements {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+    }
+
+    &__rowData {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        column-gap: 12px;
+
+        &_complete {
+            color: limegreen;
+            font-weight: bold;
+        }
+    }
+
+    &__element {
+        max-width: 1280px;
+        box-sizing: border-box;
+        height: 56px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #E8E8E8;
+        padding: 0 16px;
+        border-radius: 20px;
+    }
+
+    &__buttonAdd {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 20px;
+        background-image: url('../public/icons/add-new-icon.svg');
+        background-size: 64px 64px;
+        width: 64px;
+        height: 64px;
+        border: none;
+        background-repeat: no-repeat;
+        background-color: white;
+        object-fit: cover;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__container {
+        display: flex;
+        column-gap: 10px;
+    }
+
+    &__buttonComplete {
+        background-image: url('../public/icons/confirm-icon.svg');
+        background-size: 24px 24px;
+        width: 24px;
+        height: 24px;
+        border: none;
+        background-repeat: no-repeat;
+        background-color: white;
+        object-fit: cover;
+        padding: 0;
+        margin: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__buttonDelete {
+        background-image: url('../public/icons/delete-icon.svg');
+        background-size: 24px 24px;
+        width: 24px;
+        height: 24px;
+        border: none;
+        background-repeat: no-repeat;
+        background-color: white;
+        object-fit: cover;
+        padding: 0;
+        margin: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -21,9 +21,9 @@ const taskSlice = createSlice({
         },
 
         addTask(state, action: PayloadAction<{ taskValue: string }>) {
-            const nextId = String(state.list.length + 1) // Определяем следующий ID
+            const nextId = state.list.length + 1 // Определяем следующий ID
             state.list.push({
-                id: nextId,
+                id: String(nextId),
                 title: action.payload.taskValue,
                 completed: false,
             });

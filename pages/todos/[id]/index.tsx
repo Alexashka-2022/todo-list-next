@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/store';
 import { changeStatus } from '@/store/taskSlice';
+import styles from '@/styles/todoItem.styles.module.scss';
 
 export default function TodoItem() {
     const router = useRouter();
@@ -23,23 +24,28 @@ export default function TodoItem() {
     }
 
     return (
-        <div>
-            <h1>{`Информация о элементе с id ${id}`}</h1>
-            <p><strong>ID:</strong> {task.id}</p>
-            <p><strong>Title:</strong> {task.title}</p>
-            <p><strong>Completed:</strong> {task.completed ? 'Да' : 'Нет'}</p>
-
-            <div>
-                <button onClick={() => {
-                    if (typeof id === 'string') {
-                        toggleCompleted(task.id);
-                    } else {
-                        console.error("ID должен быть строкой");
-                    }
-                }}>
+        <div className={styles.item}>
+            <h1 className={styles.item__header}>{`Информация о элементе с id ${id}`}</h1>
+            <div className={styles.item__wrapper}>
+                <p className={styles.item__text}>ID: {task.id}</p>
+                <p className={styles.item__text}>Текст задания: {task.title}</p>
+                <p className={styles.item__text}>Статус: {task.completed ? 'Выполнено' : 'Не выполнено'}</p>
+            </div>
+            <div className={styles.item__container}>
+                <button
+                    className={styles.item__button}
+                    onClick={() => {
+                        if (typeof id === 'string') {
+                            toggleCompleted(task.id);
+                        } else {
+                            console.error("ID должен быть строкой");
+                        }
+                    }}>
                     Изменить статус
                 </button>
-                <button onClick={() => router.push('/')} >
+                <button
+                    className={styles.item__button}
+                    onClick={() => router.push('/')} >
                     Вернуться на главную
                 </button>
             </div>
